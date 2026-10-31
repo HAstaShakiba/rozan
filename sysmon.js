@@ -56,7 +56,7 @@ var SystemMonitor = class SystemMonitor {
             if (mem.MemTotal)
                 this._push(this.memory, Math.round(100 * (1 - mem.MemAvailable / mem.MemTotal)));
         } catch (e) {
-            logError(e, 'linux-notch: system sample failed');
+            logError(e, 'rozan: system sample failed');
         }
 
         if (this._battery.present && (this._count % BATTERY_EVERY === 0 || this.batteryHistory.length === 0))

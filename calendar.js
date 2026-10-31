@@ -56,7 +56,7 @@ var CalendarFeed = class CalendarFeed {
             this._source = new ShellCalendar.DBusEventSource();
             this._changedId = this._source.connect('changed', () => this.emit('changed'));
         } catch (e) {
-            logError(e, 'linux-notch: calendar unavailable');
+            logError(e, 'rozan: calendar unavailable');
             this._source = null;
         }
         this._request();

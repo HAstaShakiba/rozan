@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>روزن — ناچ رایگان شبیه NotchNook برای گنوم در لینوکس</title>
+  <meta name="description" content="روزن یک ناچ رایگان و متن‌باز برای GNOME Shell در لینوکس است: کنترل موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر و تأیید درخواست‌های Claude Code بالای صفحه.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hastashakiba.github.io/rozan/fa/">
+  <link rel="alternate" hreflang="en" href="https://hastashakiba.github.io/rozan/">
+  <link rel="alternate" hreflang="fa" href="https://hastashakiba.github.io/rozan/fa/">
+  <link rel="alternate" hreflang="x-default" href="https://hastashakiba.github.io/rozan/">
+  <meta name="theme-color" content="#15110d">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rozan">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:url" content="https://hastashakiba.github.io/rozan/fa/">
+  <meta property="og:title" content="روزن — ناچ رایگان شبیه NotchNook برای گنوم در لینوکس">
+  <meta property="og:description" content="موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر و Claude Code در یک ناچ بالای دسکتاپ گنوم.">
+  <meta property="og:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&amp;display=swap">
+  <link rel="icon" href="../icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="./"><img src="../icon.svg" alt="">روزن</a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#workspaces">بخش‌ها</a>
+        <a class="hide-sm" href="#install">نصب</a>
+        <a class="hide-sm" href="#faq">پرسش‌ها</a>
+        <a href="https://github.com/HAstaShakiba/rozan">GitHub</a>
+        <a class="lang-switch" href="../" hreflang="en" lang="en">English</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">رایگان و متن‌باز · افزونه‌ی GNOME Shell · ویلند</span>
+      <h1>روزن<span class="fa" lang="en">Rozan</span></h1>
+      <p class="lead">یک ناچ برای بالای دسکتاپ لینوکس، با الهام از NotchNook در مک. آهنگی که پخش می‌شود، جلسه‌ی
+        بعدی و کاری که Claude Code انجام می‌دهد را نشان می‌دهد و با بردن ماوس رویش، به یک مرکز کنترل کوچک باز می‌شود.</p>
+      <div class="actions">
+        <a class="btn btn-primary" id="download" href="https://github.com/HAstaShakiba/rozan/releases/latest">⬇ دانلود</a>
+        <a class="btn btn-ghost" href="https://github.com/HAstaShakiba/rozan">مشاهده در GitHub</a>
+      </div>
+      <p class="meta"><span id="release-meta">GNOME Shell 42 · مجوز MIT</span>
+        · <a href="https://github.com/HAstaShakiba/rozan/releases">همه‌ی نسخه‌ها</a></p>
+      <div class="stage">
+        <img src="../screenshot.png" width="1160" height="245" fetchpriority="high"
+             alt="روزن باز در صفحه‌ی Nook: کاور آهنگ و کنترل‌ها، نمودار پردازنده و باتری، تایمر تمرکز و فهرست کارها">
+      </div>
+      <div class="pills">
+        <span class="pill">موسیقی</span><span class="pill">فعالیت‌های زنده</span><span class="pill">تقویم</span>
+        <span class="pill">تایمر تمرکز</span><span class="pill">کارها</span><span class="pill">سینی فایل</span>
+        <span class="pill">پرامپتر</span><span class="pill">Claude Code</span>
+      </div>
+    </header>
+  </div>
+
+  <section id="activities">
+    <div class="wrap">
+      <h2>فعالیت‌های زنده، یکی‌یکی</h2>
+      <p class="section-lead">وقتی بسته است، ناچ یک قرص سیاه کوچک روی نوار بالاست. مهم‌ترین اتفاق همین لحظه را نشان
+        می‌دهد و وقتی پنجره‌ای تمام‌صفحه شود، کنار می‌رود.</p>
+      <div class="activities">
+        <div>
+          <div class="chip-shot"><img src="../img/collapsed-agent.webp" width="360" height="50" loading="lazy"
+               alt="ناچ بسته که یک قدم Claude Code را با کلمه‌ی Working نشان می‌دهد"></div>
+          <div class="chip-shot" style="margin-top:12px"><img src="../img/collapsed-perm.webp" width="360" height="50" loading="lazy"
+               alt="ناچ بسته که برای اجرای npm run deploy تأیید می‌خواهد"></div>
+        </div>
+        <div class="card">
+          <ol class="prio">
+            <li><strong>صدا و روشنایی</strong> به‌جای پنجره‌ی پیش‌فرض گنوم؛ وصل یا جدا شدن شارژر و کم شدن باتری؛ تمام شدن یک دانلود.</li>
+            <li><strong>Claude Code</strong> وقتی منتظر تأیید است یا روی یک قدم کار می‌کند.</li>
+            <li><strong>جلسه‌ای</strong> که تا ۱۰ دقیقه‌ی دیگر شروع می‌شود.</li>
+            <li><strong>دانلودی</strong> که در <code>~/Downloads</code> در جریان است.</li>
+            <li><strong>تایمر تمرکز و استراحت</strong>، بعد <strong>موسیقی</strong> با کاور و اکولایزر، و در آخر ساعت.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workspaces">
+    <div class="wrap">
+      <h2>شش بخش</h2>
+      <p class="section-lead">ماوس را روی ناچ ببرید تا باز شود، بعد از نوار زبانه‌ها یک بخش را انتخاب کنید. اسکرول به پایین
+        بازش می‌کند، اسکرول به بالا می‌بندد و اسکرول افقی آهنگ را عوض می‌کند.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-nook" id="t-nook">Nook</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-music" id="t-music">موسیقی</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-calendar" id="t-calendar">تقویم</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-tray" id="t-tray">سینی</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-prompter" id="t-prompter">پرامپتر</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-agents" id="t-agents">ایجنت‌ها</button>
+      </div>
+
+      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook">
+        <div class="shot"><img src="../img/nook.webp" width="1160" height="245" loading="lazy" alt="صفحه‌ی Nook"></div>
+        <div><h3>Nook</h3><ul>
+          <li>پخش‌کننده‌ی کوچک با آیکون برنامه روی کاور.</li>
+          <li>کاشی پردازنده و باتری با نمودار تاریخچه (روی دسکتاپ، حافظه).</li>
+          <li>تایمر تمرکز و استراحت: خط‌کش را بکشید یا اسکرول کنید؛ در پایان صدا و اعلان می‌دهد.</li>
+          <li>کارها: کلیک برای تیک زدن، کلیک راست برای حذف.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-music" aria-labelledby="t-music" hidden>
+        <div class="shot"><img src="../img/music.webp" width="560" height="240" loading="lazy" alt="صفحه‌ی موسیقی"></div>
+        <div><h3>موسیقی</h3><ul>
+          <li>با هر پخش‌کننده‌ی MPRIS کار می‌کند: Spotify، فایرفاکس، کرومیوم، VLC و بقیه.</li>
+          <li>کاور، نام آهنگ و خواننده، با نوار پیشرفتی که می‌شود کشید و جلو و عقب رفت.</li>
+          <li>قبلی، پخش/توقف و بعدی؛ اسکرول افقی هم آهنگ را عوض می‌کند.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-calendar" aria-labelledby="t-calendar" hidden>
+        <div class="shot"><img src="../img/calendar.webp" width="760" height="330" loading="lazy" alt="صفحه‌ی تقویم"></div>
+        <div><h3>تقویم</h3><ul>
+          <li>رویدادهای باقی‌مانده‌ی امروز و رویدادهای فردا، از سرویس تقویم گنوم.</li>
+          <li>تقویم‌های GNOME Online Accounts و Evolution را هم شامل می‌شود.</li>
+          <li>رویدادی که در جریان است با <em>Now</em> مشخص می‌شود.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-tray" aria-labelledby="t-tray" hidden>
+        <div class="shot"><img src="../img/tray.webp" width="620" height="205" loading="lazy" alt="صفحه‌ی سینی"></div>
+        <div><h3>سینی فایل</h3><ul>
+          <li>قفسه‌ای برای فایل‌هایی که قرار است به‌زودی استفاده کنید.</li>
+          <li>فایل‌ها را در Files کپی کنید و <em>Paste</em> را بزنید (گنوم ۴۲ کشیدن و رها کردن از برنامه‌های ویلند را نمی‌گیرد).</li>
+          <li>باز کردن، کپی، نمایش در Files یا حذف هر فایل.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-prompter" aria-labelledby="t-prompter" hidden>
+        <div class="shot"><img src="../img/prompter.webp" width="720" height="315" loading="lazy" alt="صفحه‌ی پرامپتر"></div>
+        <div><h3>پرامپتر</h3><ul>
+          <li>تله‌پرامپتر درست زیر وبکم.</li>
+          <li>متن‌های ساده‌ی <code>.txt</code>، شمارش معکوس ۳ ثانیه‌ای و تنظیم سرعت و اندازه‌ی متن.</li>
+          <li>هنگام ضبط، با قفل باز نگهش دارید.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-agents" aria-labelledby="t-agents" hidden>
+        <div class="shot"><img src="../img/agents-perm.webp" width="690" height="330" loading="lazy" alt="صفحه‌ی ایجنت‌ها با یک درخواست مجوز"></div>
+        <div><h3>ایجنت‌ها</h3><ul>
+          <li>همه‌ی جلسه‌های Claude Code را دنبال کنید: درخواست، فهرست کارها و دستوری که الان اجرا می‌شود.</li>
+          <li>درخواست‌های مجوز را از خود ناچ تأیید یا رد کنید، یا به ترمینال بروید.</li>
+          <li>برای هر جلسه یک برچسب؛ ترمینال‌های بسته‌شده خودشان حذف می‌شوند.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="looks">
+    <div class="wrap">
+      <h2>کلاسیک یا شیشه‌ای</h2>
+      <p class="section-lead">برای عوض کردن ظاهر، روی نوار زبانه‌ها کلیک راست کنید.</p>
+      <div class="compare">
+        <figure class="shot"><img src="../img/music.webp" width="560" height="240" loading="lazy" alt="ناچ سیاه کلاسیک در صفحه‌ی موسیقی">
+          <figcaption>Classic <span>· سیاه یکدست، مثل یک ناچ واقعی</span></figcaption></figure>
+        <figure class="shot"><img src="../img/glass-music.webp" width="560" height="240" loading="lazy" alt="ناچ شیشه‌ای مات و نیمه‌شفاف در صفحه‌ی موسیقی">
+          <figcaption>Liquid Glass <span>· مات و نیمه‌شفاف</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2>نصب</h2>
+      <p class="section-lead">روزن روی GNOME Shell 42 (اوبونتو ۲۲.۰۴) در نشست ویلند کار می‌کند. گنوم روی ویلند افزونه‌های
+        جدید را فقط موقع ورود پیدا می‌کند، پس بعد از نصب یک بار خارج شوید و دوباره وارد شوید.</p>
+      <div class="steps">
+        <div class="card">
+          <h3>از فایل zip نسخه</h3>
+          <p>فایل <code>rozan-…zip</code> را از <a href="https://github.com/HAstaShakiba/rozan/releases/latest">آخرین نسخه</a> بگیرید، بعد:</p>
+          <pre><code>mkdir -p ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+unzip rozan-*.zip -d ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+# log out and back in, then:
+gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
+        </div>
+        <div class="card">
+          <h3>از سورس</h3>
+          <p>خود ریپو همان افزونه است؛ لینکش کنید و با <code>git pull</code> به‌روز کنید:</p>
+          <pre><code>git clone https://github.com/HAstaShakiba/rozan.git
+ln -s "$PWD/rozan" ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+# log out and back in, then:
+gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>اتصال Claude Code (اختیاری)</h3>
+        <p>بخش ایجنت‌ها از یک hook داده می‌گیرد. <code>hooks/notch-hook.py</code> را برای رویدادهای جلسه، درخواست، ابزار،
+          مجوز، کار و توقف به <code>~/.claude/settings.json</code> اضافه کنید. متن کامل در
+          <a href="https://github.com/HAstaShakiba/rozan#claude-code-hook-for-the-agents-workspace">README</a> هست.
+          هر درخواست مجوز تا ۶۰ ثانیه منتظر جواب در ناچ می‌ماند و بعد به ترمینال برمی‌گردد.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gestures">
+    <div class="wrap">
+      <h2>حرکت‌ها</h2>
+      <table>
+        <tr><td>بردن ماوس، کلیک یا اسکرول به پایین</td><td>باز کردن ناچ</td></tr>
+        <tr><td>کلیک بیرون یا اسکرول به بالا</td><td>بستن</td></tr>
+        <tr><td>اسکرول افقی روی ناچ</td><td>آهنگ بعدی یا قبلی</td></tr>
+        <tr><td>کلیک راست روی نوار زبانه‌ها</td><td>جابه‌جایی بین کلاسیک و شیشه‌ای</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>پرسش‌ها</h2>
+      <details class="faq" open>
+        <summary><h3>NotchNook برای لینوکس هست؟</h3></summary>
+        <p>خود NotchNook فقط برای مک است. روزن یک افزونه‌ی رایگان و متن‌باز گنوم با همین ایده است: ناچی بالای وسط صفحه با موسیقی، فعالیت‌های زنده و ابزارهای سریع.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>صفحه‌ی من ناچ ندارد. مشکلی نیست؟</h3></summary>
+        <p>نه. روزن ناچ خودش را روی وسط نوار بالا می‌کشد، پس روی هر نمایشگری کار می‌کند.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>کدام نسخه‌های گنوم پشتیبانی می‌شوند؟</h3></summary>
+        <p>GNOME Shell 42، همان که با اوبونتو ۲۲.۰۴ می‌آید، در نشست ویلند. نسخه‌های جدیدتر گنوم قالب افزونه‌ی دیگری دارند و هنوز پشتیبانی نمی‌شوند.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>منوی تاریخ را می‌پوشاند؟</h3></summary>
+        <p>بله. ناچ روی وسط نوار بالا، شامل ساعت و منوی تاریخ، قرار می‌گیرد. ناچ بسته خودش ساعت را نشان می‌دهد.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>«روزن» یعنی چه؟</h3></summary>
+        <p>روزن دریچه‌ی کوچکی بالای دیوار است که نور از آن به خانه می‌آید.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>روزن یک پروژه‌ی مستقل است و هیچ ارتباطی با سازندگان NotchNook ندارد و از طرف آن‌ها تأیید نشده است.</span>
+      <span>مجوز MIT · <a href="https://github.com/HAstaShakiba/rozan">سورس در GitHub</a></span>
+    </div>
+  </footer>
+
+  <script src="../main.js" defer></script>
+</body>
+</html>

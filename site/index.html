@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rozan — a free NotchNook-style notch for GNOME on Linux</title>
+  <meta name="description" content="Rozan is a free, open-source notch for GNOME Shell on Linux: music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter and Claude Code approvals at the top of your screen.">
+  <meta name="keywords" content="NotchNook for Linux, NotchNook alternative, dynamic island Linux, GNOME notch, GNOME Shell extension, MPRIS music widget, Claude Code notch">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://hastashakiba.github.io/rozan/">
+  <link rel="alternate" hreflang="en" href="https://hastashakiba.github.io/rozan/">
+  <link rel="alternate" hreflang="fa" href="https://hastashakiba.github.io/rozan/fa/">
+  <link rel="alternate" hreflang="x-default" href="https://hastashakiba.github.io/rozan/">
+  <meta name="theme-color" content="#15110d">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rozan">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fa_IR">
+  <meta property="og:url" content="https://hastashakiba.github.io/rozan/">
+  <meta property="og:title" content="Rozan — a free NotchNook-style notch for GNOME on Linux">
+  <meta property="og:description" content="Music, live activities, calendar, timer, to-dos, tray, teleprompter and Claude Code approvals in a notch at the top of your GNOME desktop.">
+  <meta property="og:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
+  <meta property="og:image:alt" content="Rozan's open notch showing a music player, CPU and battery charts, a focus timer and to-dos">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Rozan", "alternateName": "روزن", "description": "Free, open-source notch for GNOME Shell on Linux with music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter and Claude Code approvals.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Linux (GNOME Shell 42)", "license": "https://opensource.org/licenses/MIT", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "downloadUrl": "https://github.com/HAstaShakiba/rozan/releases/latest", "url": "https://hastashakiba.github.io/rozan/", "image": "https://hastashakiba.github.io/rozan/screenshot.png", "codeRepository": "https://github.com/HAstaShakiba/rozan", "author": {"@type": "Person", "name": "HAstaShakiba", "url": "https://github.com/HAstaShakiba"}}</script>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="./"><img src="icon.svg" alt="">Rozan</a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#workspaces">Workspaces</a>
+        <a class="hide-sm" href="#install">Install</a>
+        <a class="hide-sm" href="#faq">FAQ</a>
+        <a href="https://github.com/HAstaShakiba/rozan">GitHub</a>
+        <a class="lang-switch" href="fa/" hreflang="fa" lang="fa">فارسی</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">Free &amp; open source · GNOME Shell extension · Wayland</span>
+      <h1>Rozan<span class="fa" lang="fa">روزن</span></h1>
+      <p class="lead">A notch for the top of your Linux desktop, inspired by NotchNook on the Mac. It shows what's
+        playing, what's next and what your Claude Code sessions are doing, then opens on hover into a small
+        control center.</p>
+      <div class="actions">
+        <a class="btn btn-primary" id="download" href="https://github.com/HAstaShakiba/rozan/releases/latest">⬇ Download</a>
+        <a class="btn btn-ghost" href="https://github.com/HAstaShakiba/rozan">View on GitHub</a>
+      </div>
+      <p class="meta"><span id="release-meta">GNOME Shell 42 · MIT license</span>
+        · <a href="https://github.com/HAstaShakiba/rozan/releases">All releases</a></p>
+      <div class="stage">
+        <img src="screenshot.png" width="1160" height="245" fetchpriority="high"
+             alt="Rozan open on the Nook page: album art and controls, CPU and battery charts, a Focus timer and a to-do list">
+      </div>
+      <div class="pills">
+        <span class="pill">Music</span><span class="pill">Live activities</span><span class="pill">Calendar</span>
+        <span class="pill">Focus timer</span><span class="pill">To-dos</span><span class="pill">Tray</span>
+        <span class="pill">Prompter</span><span class="pill">Claude Code</span>
+      </div>
+    </header>
+  </div>
+
+  <section id="activities">
+    <div class="wrap">
+      <h2>Live activities, one at a time</h2>
+      <p class="section-lead">Closed, the notch is a small black pill over the top bar. It shows the most important
+        thing happening right now and gets out of the way when a window goes fullscreen.</p>
+      <div class="activities">
+        <div>
+          <div class="chip-shot"><img src="img/collapsed-agent.webp" width="360" height="50" loading="lazy"
+               alt="Collapsed notch showing a Claude Code step with the word Working"></div>
+          <div class="chip-shot" style="margin-top:12px"><img src="img/collapsed-perm.webp" width="360" height="50" loading="lazy"
+               alt="Collapsed notch asking to approve the command npm run deploy"></div>
+        </div>
+        <div class="card">
+          <ol class="prio">
+            <li><strong>Volume and brightness</strong>, replacing the stock popup; battery plugged in, unplugged or low; a finished download.</li>
+            <li><strong>Claude Code</strong> waiting for approval, or working on a step.</li>
+            <li><strong>A meeting</strong> starting in the next 10 minutes.</li>
+            <li><strong>A download</strong> in progress in <code>~/Downloads</code>.</li>
+            <li><strong>The Focus/Break timer</strong>, then <strong>music</strong> with art and an equalizer, then the clock.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="workspaces">
+    <div class="wrap">
+      <h2>Six workspaces</h2>
+      <p class="section-lead">Hover the notch to open it, then pick a workspace from the tab pill. Scroll down to open,
+        scroll up to close, and scroll sideways to skip tracks.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-nook" id="t-nook">Nook</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-music" id="t-music">Music</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-calendar" id="t-calendar">Calendar</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-tray" id="t-tray">Tray</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-prompter" id="t-prompter">Prompter</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-agents" id="t-agents">Agents</button>
+      </div>
+
+      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook">
+        <div class="shot"><img src="img/nook.webp" width="1160" height="245" loading="lazy" alt="Nook page"></div>
+        <div><h3>Nook</h3><ul>
+          <li>Mini player with the app's icon on the art.</li>
+          <li>CPU and battery tiles with history charts (memory on desktops).</li>
+          <li>Focus/Break timer: drag or scroll the ruler, with an alarm and a notification at the end.</li>
+          <li>To-dos: click to tick, right-click to delete.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-music" aria-labelledby="t-music" hidden>
+        <div class="shot"><img src="img/music.webp" width="560" height="240" loading="lazy" alt="Music page"></div>
+        <div><h3>Music</h3><ul>
+          <li>Works with any MPRIS player: Spotify, Firefox, Chromium, VLC and more.</li>
+          <li>Art, title and artist, with a progress bar you can drag to seek.</li>
+          <li>Previous, play/pause and next, plus sideways scroll to skip.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-calendar" aria-labelledby="t-calendar" hidden>
+        <div class="shot"><img src="img/calendar.webp" width="760" height="330" loading="lazy" alt="Calendar page"></div>
+        <div><h3>Calendar</h3><ul>
+          <li>Today's remaining events and tomorrow's, from GNOME's calendar server.</li>
+          <li>Includes GNOME Online Accounts and Evolution calendars.</li>
+          <li>An event in progress is marked <em>Now</em>.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-tray" aria-labelledby="t-tray" hidden>
+        <div class="shot"><img src="img/tray.webp" width="620" height="205" loading="lazy" alt="Tray page"></div>
+        <div><h3>Tray</h3><ul>
+          <li>A shelf for files you're about to use.</li>
+          <li>Copy files in Files and press <em>Paste</em> (GNOME 42 can't accept drops from Wayland apps).</li>
+          <li>Open, copy, show in Files or remove each one.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-prompter" aria-labelledby="t-prompter" hidden>
+        <div class="shot"><img src="img/prompter.webp" width="720" height="315" loading="lazy" alt="Prompter page"></div>
+        <div><h3>Prompter</h3><ul>
+          <li>A teleprompter right under your webcam.</li>
+          <li>Plain <code>.txt</code> scripts, a 3-second countdown, and speed and text size controls.</li>
+          <li>Lock it open while you record.</li></ul></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-agents" aria-labelledby="t-agents" hidden>
+        <div class="shot"><img src="img/agents-perm.webp" width="690" height="330" loading="lazy" alt="Agents page with a permission request"></div>
+        <div><h3>Agents</h3><ul>
+          <li>Follow every Claude Code session: its prompt, task list and the command running now.</li>
+          <li>Allow or deny permission requests from the notch, or jump to the terminal.</li>
+          <li>One chip per session; closed terminals drop off on their own.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="looks">
+    <div class="wrap">
+      <h2>Classic or Liquid Glass</h2>
+      <p class="section-lead">Right-click the tab pill to switch looks.</p>
+      <div class="compare">
+        <figure class="shot"><img src="img/music.webp" width="560" height="240" loading="lazy" alt="Classic black notch on the Music page">
+          <figcaption>Classic <span>· solid black, like a real notch</span></figcaption></figure>
+        <figure class="shot"><img src="img/glass-music.webp" width="560" height="240" loading="lazy" alt="Translucent blurred notch on the Music page">
+          <figcaption>Liquid Glass <span>· blurred and translucent</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2>Install</h2>
+      <p class="section-lead">Rozan runs on GNOME Shell 42 (Ubuntu 22.04) in a Wayland session. GNOME on Wayland only
+        finds new extensions at login, so log out and back in once after installing.</p>
+      <div class="steps">
+        <div class="card">
+          <h3>From the release zip</h3>
+          <p>Download <code>rozan-…zip</code> from the <a href="https://github.com/HAstaShakiba/rozan/releases/latest">latest release</a>, then:</p>
+          <pre><code>mkdir -p ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+unzip rozan-*.zip -d ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+# log out and back in, then:
+gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
+        </div>
+        <div class="card">
+          <h3>From source</h3>
+          <p>The repository is the extension, so you can link it in and update with <code>git pull</code>:</p>
+          <pre><code>git clone https://github.com/HAstaShakiba/rozan.git
+ln -s "$PWD/rozan" ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+# log out and back in, then:
+gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h3>Connect Claude Code (optional)</h3>
+        <p>The Agents workspace is fed by a hook. Add <code>hooks/notch-hook.py</code> to <code>~/.claude/settings.json</code>
+          for the session, prompt, tool, permission, task and stop events; the
+          <a href="https://github.com/HAstaShakiba/rozan#claude-code-hook-for-the-agents-workspace">README</a> has the full
+          snippet. A permission request waits up to 60 seconds for an answer in the notch, then falls back to the terminal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gestures">
+    <div class="wrap">
+      <h2>Gestures</h2>
+      <table>
+        <tr><td>Hover, click or scroll down</td><td>Open the notch</td></tr>
+        <tr><td>Click outside or scroll up</td><td>Close it</td></tr>
+        <tr><td>Scroll sideways on the notch</td><td>Next or previous track</td></tr>
+        <tr><td>Right-click the tab pill</td><td>Switch between Classic and Liquid Glass</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details class="faq" open>
+        <summary><h3>Is there a NotchNook for Linux?</h3></summary>
+        <p>NotchNook itself is a macOS app. Rozan is a free, open-source GNOME Shell extension in the same spirit: a notch at the top center of the screen with music, live activities and quick tools.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>My screen has no notch. Does that matter?</h3></summary>
+        <p>No. Rozan draws its own notch over the middle of the top bar, so it works on any display.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>Which GNOME versions are supported?</h3></summary>
+        <p>GNOME Shell 42, as shipped with Ubuntu 22.04, in a Wayland session. Newer GNOME versions use a different extension format and aren't supported yet.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>Does it cover the date menu?</h3></summary>
+        <p>Yes. The notch sits over the center of the top bar, including the clock and date menu. The collapsed notch shows the time instead.</p>
+      </details>
+      <details class="faq">
+        <summary><h3>What does "Rozan" mean?</h3></summary>
+        <p>Rozan (روزن) is Persian for the small opening high in a wall that lets light in.</p>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>Rozan is an independent project. It is not affiliated with or endorsed by the makers of NotchNook.</span>
+      <span>MIT license · <a href="https://github.com/HAstaShakiba/rozan">Source on GitHub</a></span>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

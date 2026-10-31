@@ -21,7 +21,7 @@ var BatteryMonitor = class BatteryMonitor {
             '/org/freedesktop/UPower/devices/DisplayDevice', (proxy, error) => {
                 if (error) {
                     if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
-                        log(`linux-notch: UPower unavailable: ${error.message}`);
+                        log(`rozan: UPower unavailable: ${error.message}`);
                     return;
                 }
                 this._proxy = proxy;

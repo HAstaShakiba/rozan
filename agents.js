@@ -1,13 +1,13 @@
 /* exported AgentsFeed, AgentsPage */
 // AI agent progress, fed by hooks/notch-hook.py (registered as a Claude Code hook).
-// The hook keeps one JSON file per session in ~/.cache/linux-notch/agents. This module
+// The hook keeps one JSON file per session in ~/.cache/rozan/agents. This module
 // lists every live session, lets the user pick which one the Agents page shows, and
 // answers permission requests by writing <session>.decision.
 const { St, Clutter, Gio, GLib, Pango } = imports.gi;
 const Main = imports.ui.main;
 const Signals = imports.signals;
 
-const DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), 'linux-notch', 'agents']);
+const DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), 'rozan', 'agents']);
 const STALE_S = 2 * 3600;   // ignore sessions idle for longer than this
 const ACTIVE_S = 120;       // "working" sessions older than this are treated as idle
 const HEARTBEAT = GLib.build_filenamev([DIR, '.notch-alive']);
@@ -130,7 +130,7 @@ var AgentsFeed = class AgentsFeed {
             }
             children.close(null);
         } catch (e) {
-            logError(e, 'linux-notch: cannot read agent sessions');
+            logError(e, 'rozan: cannot read agent sessions');
         }
         sessions.sort((a, b) => (a.started ?? a.updated) - (b.started ?? b.updated));
         this.sessions = sessions;

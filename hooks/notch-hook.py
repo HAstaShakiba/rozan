@@ -3,7 +3,7 @@
 
 Register this script for the hook events listed in README.md. Each run reads one
 hook event (JSON) from stdin and updates a small per-session state file in
-~/.cache/linux-notch/agents/<session_id>.json, which the GNOME Shell extension
+~/.cache/rozan/agents/<session_id>.json, which the GNOME Shell extension
 watches to show progress in the notch.
 
 For PermissionRequest events it also waits (up to WAIT_SECONDS) for the user to
@@ -17,7 +17,7 @@ import sys
 import tempfile
 import time
 
-STATE_DIR = os.path.join(os.environ.get("XDG_CACHE_HOME") or os.path.expanduser("~/.cache"), "linux-notch", "agents")
+STATE_DIR = os.path.join(os.environ.get("XDG_CACHE_HOME") or os.path.expanduser("~/.cache"), "rozan", "agents")
 WAIT_SECONDS = 60
 HEARTBEAT_MAX_AGE = 30  # the extension refreshes .notch-alive every 10 s while it runs
 MAX_STEPS = 6

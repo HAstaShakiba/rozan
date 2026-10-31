@@ -1,9 +1,9 @@
 /* exported Store */
-// Small JSON state file (~/.local/share/linux-notch/state.json) for to-dos and
+// Small JSON state file (~/.local/share/rozan/state.json) for to-dos and
 // timer settings. Writes are debounced; everything stays on this machine.
 const { Gio, GLib } = imports.gi;
 
-const DIR = GLib.build_filenamev([GLib.get_user_data_dir(), 'linux-notch']);
+const DIR = GLib.build_filenamev([GLib.get_user_data_dir(), 'rozan']);
 const PATH = GLib.build_filenamev([DIR, 'state.json']);
 const SAVE_DELAY_MS = 500;
 
@@ -16,7 +16,7 @@ var Store = class Store {
                 this.data = JSON.parse(new TextDecoder().decode(bytes));
         } catch (e) {
             if (!e.matches?.(GLib.FileError, GLib.FileError.NOENT))
-                log(`linux-notch: cannot read ${PATH}: ${e.message}`);
+                log(`rozan: cannot read ${PATH}: ${e.message}`);
         }
         this._saveId = 0;
     }
@@ -43,7 +43,7 @@ var Store = class Store {
             file.replace_contents(new TextEncoder().encode(JSON.stringify(this.data, null, 1)),
                 null, false, Gio.FileCreateFlags.PRIVATE | Gio.FileCreateFlags.REPLACE_DESTINATION, null);
         } catch (e) {
-            logError(e, 'linux-notch: cannot save state');
+            logError(e, 'rozan: cannot save state');
         }
     }
 

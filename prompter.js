@@ -1,6 +1,6 @@
 /* exported PrompterPage */
 // Teleprompter workspace: scrolls a script right under the top of the screen.
-// Scripts are plain .txt files in ~/.local/share/linux-notch/scripts; "Edit
+// Scripts are plain .txt files in ~/.local/share/rozan/scripts; "Edit
 // scripts…" opens that folder. Voice-follow mode needs speech recognition,
 // which GNOME does not provide, so only Scroll mode is available.
 const { St, Clutter, Gio, GLib, Pango } = imports.gi;
@@ -8,7 +8,7 @@ const Signals = imports.signals;
 const Main = imports.ui.main;
 const PopupMenu = imports.ui.popupMenu;
 
-const SCRIPTS_DIR = GLib.build_filenamev([GLib.get_user_data_dir(), 'linux-notch', 'scripts']);
+const SCRIPTS_DIR = GLib.build_filenamev([GLib.get_user_data_dir(), 'rozan', 'scripts']);
 const FRAME_MS = 16;
 const BASE_SPEED = 28; // pixels per second at 1.0x
 const SPEEDS = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0];

@@ -23,7 +23,7 @@ var DownloadsMonitor = class DownloadsMonitor {
             this._monitor = this._dir.monitor_directory(Gio.FileMonitorFlags.WATCH_MOVES, null);
             this._monitorId = this._monitor.connect('changed', (m, file, other, type) => this._onEvent(file, other, type));
         } catch (e) {
-            log(`linux-notch: cannot watch ${path}: ${e.message}`);
+            log(`rozan: cannot watch ${path}: ${e.message}`);
             this._monitor = null;
         }
     }

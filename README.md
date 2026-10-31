@@ -4,8 +4,6 @@ A notch for GNOME Shell 42 (Wayland), modeled on NotchNook for macOS.
 
 *Rozan* is the small opening high in a Persian wall that lets light in.
 
-The extension UUID is still `linux-notch@local`, and its data lives in `~/.local/share/linux-notch` and `~/.cache/linux-notch`.
-
 ## Phase 1 (current)
 - Black notch at the top center of the primary monitor, over the panel.
 - Collapsed: clock. While music plays it widens and shows album art plus an equalizer.
@@ -36,7 +34,7 @@ Nook (home) workspace:
 - To-dos: left click toggles done, right click deletes, "Add a task" opens a text field
   (Enter adds, Esc cancels, clicking elsewhere adds and closes).
 
-To-dos and timer settings are stored in `~/.local/share/linux-notch/state.json`.
+To-dos and timer settings are stored in `~/.local/share/rozan/state.json`.
 
 ## Phase 4 (current): all workspaces from the NotchNook demo
 Tabs: Nook, Music, Calendar, Tray, Prompter, Agents. Right-click the tab pill to switch between
@@ -45,7 +43,7 @@ Tabs: Nook, Music, Calendar, Tray, Prompter, Agents. Right-click the tab pill to
 - **Tray**: a shelf of file references. GNOME Shell 42 cannot receive drag-and-drop from Wayland
   apps, so copy files in Files (Ctrl+C) and press **Paste**. Left click opens a file; right click
   offers Open, Copy (paste it anywhere), Show in Files, Remove.
-- **Prompter**: teleprompter for `.txt` scripts in `~/.local/share/linux-notch/scripts`
+- **Prompter**: teleprompter for `.txt` scripts in `~/.local/share/rozan/scripts`
   (menu at top left; "Edit scripts…" opens the folder). 3-second countdown, speed and text size
   steppers, mouse wheel to jump. The lock keeps the notch open; it also stays open while running.
   Voice mode is shown but disabled (GNOME has no speech recognition service).
@@ -64,16 +62,16 @@ Add to `~/.claude/settings.json` (adjust the path):
 ```json
 {
   "hooks": {
-    "SessionStart":       [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "UserPromptSubmit":   [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "PreToolUse":         [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "PostToolUse":        [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "PostToolUseFailure": [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "PermissionRequest":  [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py", "timeout": 90}]}],
-    "TaskCreated":        [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "TaskCompleted":      [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "Stop":               [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}],
-    "SessionEnd":         [{"hooks": [{"type": "command", "command": "/path/to/linux-notch@local/hooks/notch-hook.py"}]}]
+    "SessionStart":       [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "UserPromptSubmit":   [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "PreToolUse":         [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "PostToolUse":        [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "PostToolUseFailure": [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "PermissionRequest":  [{"matcher": "*", "hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py", "timeout": 90}]}],
+    "TaskCreated":        [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "TaskCompleted":      [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "Stop":               [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}],
+    "SessionEnd":         [{"hooks": [{"type": "command", "command": "/path/to/rozan/hooks/notch-hook.py"}]}]
   }
 }
 ```
@@ -84,12 +82,19 @@ normal terminal prompt.
 Note: the notch covers the center of the top bar, including the date menu.
 
 ## Install
-The extension directory is symlinked into `~/.local/share/gnome-shell/extensions/linux-notch@local`.
+The repository root is the extension. Clone it and link it into the extensions folder under the extension's UUID:
+
+```bash
+git clone https://github.com/HAstaShakiba/rozan.git
+ln -s "$PWD/rozan" ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
+```
+
+Or unzip the release zip into `~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io`.
 On Wayland, GNOME Shell only discovers new extensions at login:
 
 ```bash
 # log out and back in, then:
-gnome-extensions enable linux-notch@local
+gnome-extensions enable rozan@hastashakiba.github.io
 ```
 
 After editing code, log out and in again (Wayland cannot restart the shell in place).
@@ -98,7 +103,7 @@ After editing code, log out and in again (Wayland cannot restart the shell in pl
 ```bash
 dbus-run-session -- gnome-shell --nested --wayland
 ```
-In the nested window, enable the extension with `gnome-extensions enable linux-notch@local`.
+In the nested window, enable the extension with `gnome-extensions enable rozan@hastashakiba.github.io`.
 
 ## Logs
 ```bash
@@ -107,8 +112,8 @@ journalctl --user -f -o cat /usr/bin/gnome-shell | grep -iE 'notch|error'
 
 ## Uninstall
 ```bash
-gnome-extensions disable linux-notch@local
-rm ~/.local/share/gnome-shell/extensions/linux-notch@local
+gnome-extensions disable rozan@hastashakiba.github.io
+rm ~/.local/share/gnome-shell/extensions/rozan@hastashakiba.github.io
 ```
 
 ## Files
@@ -124,7 +129,7 @@ rm ~/.local/share/gnome-shell/extensions/linux-notch@local
 - `store.js`: JSON state file.
 - `tray.js`, `prompter.js`, `agents.js`: Tray, Prompter and Agents workspaces.
 - `hooks/notch-hook.py`: Claude Code hook that feeds the Agents workspace.
-- `art.js`: album art cache (`~/.cache/linux-notch/art`), downloaded with curl.
+- `art.js`: album art cache (`~/.cache/rozan/art`), downloaded with curl.
 - `stylesheet.css`: styles.
 
 ## License

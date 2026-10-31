@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hastashakiba.github.io/rozan/sitemap.xml

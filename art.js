@@ -5,7 +5,7 @@
 // major versions cannot coexist inside gnome-shell.
 const { Gio, GLib } = imports.gi;
 
-const CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), 'linux-notch', 'art']);
+const CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), 'rozan', 'art']);
 
 var loadArt = function (url, callback) {
     if (!url)
@@ -37,7 +37,7 @@ var loadArt = function (url, callback) {
             }
         });
     } catch (e) {
-        logError(e, 'linux-notch: cannot start curl');
+        logError(e, 'rozan: cannot start curl');
         callback(null);
     }
     return undefined;

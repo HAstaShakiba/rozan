@@ -56,7 +56,7 @@ class Player {
         PlayerProxy(Gio.DBus.session, busName, MPRIS_PATH, (proxy, error) => {
             if (error) {
                 if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
-                    log(`linux-notch: cannot connect to ${busName}: ${error.message}`);
+                    log(`rozan: cannot connect to ${busName}: ${error.message}`);
                 return;
             }
             this._proxy = proxy;
@@ -180,7 +180,7 @@ var MprisManager = class MprisManager {
                     names.filter(n => n.startsWith(MPRIS_PREFIX)).forEach(n => this._add(n));
                 } catch (e) {
                     if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CANCELLED))
-                        logError(e, 'linux-notch: ListNames failed');
+                        logError(e, 'rozan: ListNames failed');
                 }
             });
     }
