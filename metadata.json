@@ -1,10 +1,10 @@
 {
   "uuid": "rozan@hastashakiba.github.io",
   "name": "Rozan",
-  "description": "Rozan (روزن): a NotchNook-style notch at the top center of the screen. Music, live activities, calendar, Nook page, tray, prompter and Claude Code agents.",
+  "description": "Rozan (روزن): a NotchNook-style notch at the top center of the screen. Notifications, music, live activities, calendar, Nook page, tray, prompter and Claude Code agents.",
   "shell-version": [
     "42"
   ],
-  "version": 2,
+  "version": 3,
   "url": "https://github.com/HAstaShakiba/rozan"
 }
