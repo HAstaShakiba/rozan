@@ -126,3 +126,6 @@ rm ~/.local/share/gnome-shell/extensions/linux-notch@local
 - `hooks/notch-hook.py`: Claude Code hook that feeds the Agents workspace.
 - `art.js`: album art cache (`~/.cache/linux-notch/art`), downloaded with curl.
 - `stylesheet.css`: styles.
+
+## License
+MIT. See [LICENSE](LICENSE).
