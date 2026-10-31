@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rozan — a free NotchNook-style notch for GNOME on Linux</title>
-  <meta name="description" content="Rozan is a free, open-source notch for GNOME Shell on Linux: music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter and Claude Code approvals at the top of your screen.">
+  <meta name="description" content="Rozan is a free, open-source notch for GNOME Shell on Linux: music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter, Claude Code approvals and notifications at the top of your screen.">
   <meta name="keywords" content="NotchNook for Linux, NotchNook alternative, dynamic island Linux, GNOME notch, GNOME Shell extension, MPRIS music widget, Claude Code notch">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://hastashakiba.github.io/rozan/">
@@ -18,13 +18,13 @@
   <meta property="og:locale:alternate" content="fa_IR">
   <meta property="og:url" content="https://hastashakiba.github.io/rozan/">
   <meta property="og:title" content="Rozan — a free NotchNook-style notch for GNOME on Linux">
-  <meta property="og:description" content="Music, live activities, calendar, timer, to-dos, tray, teleprompter and Claude Code approvals in a notch at the top of your GNOME desktop.">
+  <meta property="og:description" content="Music, live activities, calendar, timer, to-dos, tray, teleprompter, Claude Code approvals and notifications in a notch at the top of your GNOME desktop.">
   <meta property="og:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
   <meta property="og:image:alt" content="Rozan's open notch showing a music player, CPU and battery charts, a focus timer and to-dos">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Rozan", "alternateName": "روزن", "description": "Free, open-source notch for GNOME Shell on Linux with music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter and Claude Code approvals.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Linux (GNOME Shell 42)", "license": "https://opensource.org/licenses/MIT", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "downloadUrl": "https://github.com/HAstaShakiba/rozan/releases/latest", "url": "https://hastashakiba.github.io/rozan/", "image": "https://hastashakiba.github.io/rozan/screenshot.png", "codeRepository": "https://github.com/HAstaShakiba/rozan", "author": {"@type": "Person", "name": "HAstaShakiba", "url": "https://github.com/HAstaShakiba"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Rozan", "alternateName": "روزن", "description": "Free, open-source notch for GNOME Shell on Linux with music controls, live activities, calendar, timer, to-dos, a file tray, a teleprompter, Claude Code approvals and notifications.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Linux (GNOME Shell 42)", "license": "https://opensource.org/licenses/MIT", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "downloadUrl": "https://github.com/HAstaShakiba/rozan/releases/latest", "url": "https://hastashakiba.github.io/rozan/", "image": "https://hastashakiba.github.io/rozan/screenshot.png", "codeRepository": "https://github.com/HAstaShakiba/rozan", "author": {"@type": "Person", "name": "HAstaShakiba", "url": "https://github.com/HAstaShakiba"}}</script>
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -60,7 +60,7 @@
       <div class="pills">
         <span class="pill">Music</span><span class="pill">Live activities</span><span class="pill">Calendar</span>
         <span class="pill">Focus timer</span><span class="pill">To-dos</span><span class="pill">Tray</span>
-        <span class="pill">Prompter</span><span class="pill">Claude Code</span>
+        <span class="pill">Prompter</span><span class="pill">Claude Code</span><span class="pill">Notifications</span>
       </div>
     </header>
   </div>
@@ -79,7 +79,7 @@
         </div>
         <div class="card">
           <ol class="prio">
-            <li><strong>Volume and brightness</strong>, replacing the stock popup; battery plugged in, unplugged or low; a finished download.</li>
+            <li><strong>Volume and brightness</strong>, replacing the stock popup; battery plugged in, unplugged or low; a finished download; a new notification.</li>
             <li><strong>Claude Code</strong> waiting for your approval.</li>
             <li><strong>The Focus/Break timer</strong>, while it runs.</li>
             <li><strong>A meeting</strong> starting in the next 10 minutes.</li>
@@ -93,11 +93,12 @@
 
   <section id="workspaces">
     <div class="wrap">
-      <h2>Six workspaces</h2>
+      <h2>Seven workspaces</h2>
       <p class="section-lead">Hover the notch to open it, then pick a workspace from the tab pill. Scroll down to open,
         scroll up to close, and scroll sideways to skip tracks.</p>
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" aria-controls="p-nook" id="t-nook">Nook</button>
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-notifications" id="t-notifications">Notifications</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-nook" id="t-nook">Nook</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-music" id="t-music">Music</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-calendar" id="t-calendar">Calendar</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-tray" id="t-tray">Tray</button>
@@ -105,7 +106,19 @@
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-agents" id="t-agents">Agents</button>
       </div>
 
-      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook">
+      <div class="panel" role="tabpanel" id="p-notifications" aria-labelledby="t-notifications">
+        <div class="shot"><div class="notif-mock" dir="ltr" role="img" aria-label="Notifications page listing three notifications">
+          <div class="nm-head"><span class="nm-heading">NOTIFICATIONS</span><span class="nm-count">3</span><span class="nm-clear">Clear all</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#0a84ff"></span><div class="nm-text"><div class="nm-top"><b>CALENDAR</b><span>now</span></div><div class="nm-title">Design review</div><div class="nm-body">Starts in 10 minutes · Room 2</div></div><span class="nm-x">×</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#30d158"></span><div class="nm-text"><div class="nm-top"><b>TERMINAL</b><span>4m</span></div><div class="nm-title">Build finished</div><div class="nm-body">npm run build exited with code 0</div></div><span class="nm-x">×</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#ff9f0a"></span><div class="nm-text"><div class="nm-top"><b>FILES</b><span>14:30</span></div><div class="nm-title">Copy complete</div><div class="nm-body">12 files copied to Backups</div></div><span class="nm-x">×</span></div>
+        </div></div>
+        <div><h3>Notifications</h3><ul>
+          <li>Everything in GNOME's notification list, newest first, with the app, title, text and time.</li>
+          <li>Click one to open it, × to dismiss it, or <em>Clear all</em>. It's cleared from GNOME too.</li>
+          <li>A new one flashes in the closed notch, except in Do Not Disturb.</li></ul></div>
+      </div>
+      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook" hidden>
         <div class="shot"><img src="img/nook.webp" width="1160" height="245" loading="lazy" alt="Nook page"></div>
         <div><h3>Nook</h3><ul>
           <li>Mini player with the app's icon on the art.</li>

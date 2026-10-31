@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>روزن — ناچ رایگان شبیه NotchNook برای گنوم در لینوکس</title>
-  <meta name="description" content="روزن یک ناچ رایگان و متن‌باز برای GNOME Shell در لینوکس است: کنترل موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر و تأیید درخواست‌های Claude Code بالای صفحه.">
+  <meta name="description" content="روزن یک ناچ رایگان و متن‌باز برای GNOME Shell در لینوکس است: کنترل موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر، تأیید درخواست‌های Claude Code و اعلان‌ها بالای صفحه.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://hastashakiba.github.io/rozan/fa/">
   <link rel="alternate" hreflang="en" href="https://hastashakiba.github.io/rozan/">
@@ -17,7 +17,7 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:url" content="https://hastashakiba.github.io/rozan/fa/">
   <meta property="og:title" content="روزن — ناچ رایگان شبیه NotchNook برای گنوم در لینوکس">
-  <meta property="og:description" content="موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر و Claude Code در یک ناچ بالای دسکتاپ گنوم.">
+  <meta property="og:description" content="موسیقی، فعالیت‌های زنده، تقویم، تایمر، کارها، سینی فایل، تله‌پرامپتر، Claude Code و اعلان‌ها در یک ناچ بالای دسکتاپ گنوم.">
   <meta property="og:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://hastashakiba.github.io/rozan/screenshot.png">
@@ -57,7 +57,7 @@
       <div class="pills">
         <span class="pill">موسیقی</span><span class="pill">فعالیت‌های زنده</span><span class="pill">تقویم</span>
         <span class="pill">تایمر تمرکز</span><span class="pill">کارها</span><span class="pill">سینی فایل</span>
-        <span class="pill">پرامپتر</span><span class="pill">Claude Code</span>
+        <span class="pill">پرامپتر</span><span class="pill">Claude Code</span><span class="pill">اعلان‌ها</span>
       </div>
     </header>
   </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="card">
           <ol class="prio">
-            <li><strong>صدا و روشنایی</strong> به‌جای پنجره‌ی پیش‌فرض گنوم؛ وصل یا جدا شدن شارژر و کم شدن باتری؛ تمام شدن یک دانلود.</li>
+            <li><strong>صدا و روشنایی</strong> به‌جای پنجره‌ی پیش‌فرض گنوم؛ وصل یا جدا شدن شارژر و کم شدن باتری؛ تمام شدن یک دانلود؛ رسیدن یک اعلان تازه.</li>
             <li><strong>Claude Code</strong> وقتی منتظر تأیید شماست.</li>
             <li><strong>تایمر تمرکز و استراحت</strong> وقتی در حال اجراست.</li>
             <li><strong>جلسه‌ای</strong> که تا ۱۰ دقیقه‌ی دیگر شروع می‌شود.</li>
@@ -90,11 +90,12 @@
 
   <section id="workspaces">
     <div class="wrap">
-      <h2>شش بخش</h2>
+      <h2>هفت بخش</h2>
       <p class="section-lead">ماوس را روی ناچ ببرید تا باز شود، بعد از نوار زبانه‌ها یک بخش را انتخاب کنید. اسکرول به پایین
         بازش می‌کند، اسکرول به بالا می‌بندد و اسکرول افقی آهنگ را عوض می‌کند.</p>
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" aria-controls="p-nook" id="t-nook">Nook</button>
+        <button class="tab" role="tab" aria-selected="true" aria-controls="p-notifications" id="t-notifications">اعلان‌ها</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-nook" id="t-nook">Nook</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-music" id="t-music">موسیقی</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-calendar" id="t-calendar">تقویم</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-tray" id="t-tray">سینی</button>
@@ -102,7 +103,19 @@
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-agents" id="t-agents">ایجنت‌ها</button>
       </div>
 
-      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook">
+      <div class="panel" role="tabpanel" id="p-notifications" aria-labelledby="t-notifications">
+        <div class="shot"><div class="notif-mock" dir="ltr" role="img" aria-label="بخش اعلان‌ها با سه اعلان">
+          <div class="nm-head"><span class="nm-heading">NOTIFICATIONS</span><span class="nm-count">3</span><span class="nm-clear">Clear all</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#0a84ff"></span><div class="nm-text"><div class="nm-top"><b>CALENDAR</b><span>now</span></div><div class="nm-title">Design review</div><div class="nm-body">Starts in 10 minutes · Room 2</div></div><span class="nm-x">×</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#30d158"></span><div class="nm-text"><div class="nm-top"><b>TERMINAL</b><span>4m</span></div><div class="nm-title">Build finished</div><div class="nm-body">npm run build exited with code 0</div></div><span class="nm-x">×</span></div>
+          <div class="nm-card"><span class="nm-icon" style="background:#ff9f0a"></span><div class="nm-text"><div class="nm-top"><b>FILES</b><span>14:30</span></div><div class="nm-title">Copy complete</div><div class="nm-body">12 files copied to Backups</div></div><span class="nm-x">×</span></div>
+        </div></div>
+        <div><h3>اعلان‌ها</h3><ul>
+          <li>همه‌ی اعلان‌های گنوم، از جدید به قدیم، با نام برنامه، عنوان، متن و زمان.</li>
+          <li>با کلیک بازش کنید، با × ببندیدش یا با <em>Clear all</em> همه را پاک کنید؛ از گنوم هم پاک می‌شوند.</li>
+          <li>اعلان تازه در ناچ بسته هم چشمک می‌زند، مگر وقتی «مزاحم نشوید» روشن است.</li></ul></div>
+      </div>
+      <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook" hidden>
         <div class="shot"><img src="../img/nook.webp" width="1160" height="245" loading="lazy" alt="صفحه‌ی Nook"></div>
         <div><h3>Nook</h3><ul>
           <li>پخش‌کننده‌ی کوچک با آیکون برنامه روی کاور.</li>

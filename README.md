@@ -3,8 +3,8 @@
 *Rozan* (روزن) is a **free, open-source notch for GNOME on Linux**, inspired by NotchNook for macOS. In Persian, a rozan is
 the small opening high in a wall that lets light in. Rozan is a black pill at the top center of your screen that shows
 what's happening right now: the song playing, a meeting about to start, a download, or what Claude Code is doing. Hover
-over it and it opens into a small control center with music, calendar, a focus timer, to-dos, a file tray, a teleprompter
-and Claude Code approvals.
+over it and it opens into a small control center with music, calendar, a focus timer, to-dos, a file tray, a teleprompter,
+Claude Code approvals and your notifications.
 
 Website: <https://hastashakiba.github.io/rozan/>
 
@@ -74,7 +74,7 @@ When it's closed, the notch shows one thing at a time, in this order of priority
 
 1. **Volume and brightness**, in place of GNOME's popup. GNOME's own popup is still used for fullscreen windows and
    while the notch is open. Also shown here: the charger being plugged in or unplugged, low battery (20, 10 and 5 %),
-   and a finished download.
+   a finished download, and a new notification (app icon and title, skipped in Do Not Disturb).
 2. **Claude Code** waiting for your approval.
 3. **The Focus/Break timer**, while it runs.
 4. **A meeting** starting within 10 minutes ("in N min"), or one that started less than 5 minutes ago ("now").
@@ -87,6 +87,7 @@ When it's closed, the notch shows one thing at a time, in this order of priority
 
 | | |
 |---|---|
+| **Notifications** | Everything in GNOME's notification list, newest first, with the app, title, text and time. Click one to open it, × to dismiss it, or *Clear all*. Dismissing here removes it from GNOME too, and opening the page marks them as seen. |
 | **Nook** | Mini player with the app's icon on the art. CPU and battery tiles with history charts (a memory tile on machines without a battery). A Focus/Break timer: scroll or drag the minute ruler, then Start. It plays an alarm and shows a notification when a period ends. To-dos: click to tick, right-click to delete, *Add a task* to add (Enter adds, Esc cancels). |
 | **Music** | Works with any MPRIS player (Spotify, Firefox, Chromium, VLC and others). Shows art, title and artist, with a progress bar you can drag to seek, and previous, play/pause and next. |
 | **Calendar** | Today's remaining events and tomorrow's, from GNOME's calendar server, so GNOME Online Accounts and Evolution calendars are included. An event in progress is marked *Now*. |
@@ -155,6 +156,7 @@ journalctl --user -f -o cat /usr/bin/gnome-shell | grep -iE 'rozan|error'
 | `calendar.js` | Calendar feed (GNOME Shell's `DBusEventSource`) and the Calendar page |
 | `battery.js`, `downloads.js` | UPower battery monitor, `~/Downloads` monitor |
 | `tray.js`, `prompter.js`, `agents.js` | Tray, Prompter and Agents pages |
+| `notifications.js` | Notification feed (GNOME Shell's message tray) and the Notifications page |
 | `store.js` | JSON state file |
 | `hooks/notch-hook.py` | Claude Code hook that feeds the Agents page |
 | `stylesheet.css` | Styles |

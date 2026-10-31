@@ -4,14 +4,15 @@
 // bar, rounded bottom corners, a floating tab pill underneath when open).
 //
 // Collapsed, it shows one "live activity" at a time, in this priority order:
-//   1. transient: volume/brightness HUD, battery plug/unplug or low, finished download
+//   1. transient: volume/brightness HUD, battery plug/unplug or low, finished download,
+//      new notification
 //   1b. Focus/Break timer while running or paused
 //   2. meeting starting within 10 minutes (or started under 5 minutes ago)
 //   3. download in progress
 //   4. music playing (album art + equalizer)
 //   5. idle (clock)
 //
-// Hover, click or scroll down opens it. Each workspace (Nook, Music, Calendar) has its
+// Hover, click or scroll down opens it. Each workspace (Nook, Music, Calendar, ...) has its
 // own size; switching tabs animates between them.
 const { St, Clutter, GLib, Gio, GObject, Graphene, Pango, Shell } = imports.gi;
 const Cairo = imports.cairo;
@@ -30,6 +31,7 @@ const { NookPage } = Me.imports.nook;
 const { TrayPage } = Me.imports.tray;
 const { PrompterPage } = Me.imports.prompter;
 const { AgentsFeed, AgentsPage } = Me.imports.agents;
+const { NotificationsFeed, NotificationsPage } = Me.imports.notifications;
 
 const EAR = 10; // radius of the concave corners joining the top bar
 const COLLAPSED_WIDTH = { idle: 100, music: 140, activity: 190, hud: 150 };
@@ -41,6 +43,7 @@ const PAGE_SIZE = {
     tray: [560, 124],
     prompter: [660, 236],
     agents: [620, 172],
+    notifications: [560, 208],
 };
 // Liquid Glass: translucent tint over a blurred copy of what is behind the notch.
 const GLASS_TINT = [0.06, 0.06, 0.09, 0.42];
@@ -56,6 +59,7 @@ const POSITION_POLL_MS = 1000;
 const EQ_FRAME_MS = 180;
 const HUD_MS = 1500;
 const EVENT_MS = 3000;
+const NOTIFICATION_MS = 4000;
 const ACTIVITY_REFRESH_S = 15;
 
 function formatBytes(n) {
@@ -206,7 +210,7 @@ var Notch = class Notch {
     constructor() {
         this._timeouts = new Map();
         this._expanded = false;
-        this._page = 'nook';
+        this._page = 'notifications';
         this._busy = new Set(); // pages that need the notch to stay open
         this._player = null;
         this._artUrl = undefined;
@@ -231,6 +235,7 @@ var Notch = class Notch {
         this._timer = new FocusTimer(this._store);
         this._sysmon = new SystemMonitor(this._battery);
         this._agents = new AgentsFeed();
+        this._notifications = new NotificationsFeed();
         this._style = this._store.get('style', 'classic');
 
         // Outer actor: transparent, holds the two ears and the black body between them.
@@ -303,6 +308,7 @@ var Notch = class Notch {
             [this._prompterPage, this._prompterPage.connect('busy', (p, on) => this._setBusy('prompter', on))],
         ];
         this._agentsId = this._agents.connect('changed', () => this._renderCollapsed());
+        this._notificationShownId = this._notifications.connect('shown', (f, n) => this._showNotification(n));
         this._tabBar.connect('button-release-event', (a, e) => {
             if (e.get_button() !== Clutter.BUTTON_SECONDARY)
                 return Clutter.EVENT_PROPAGATE;
@@ -313,7 +319,7 @@ var Notch = class Notch {
 
         this._patchOsd();
         this._syncPlayer();
-        this._selectPage('nook');
+        this._selectPage('notifications');
         this._relayout(false);
     }
 
@@ -378,6 +384,10 @@ var Notch = class Notch {
         this._pages.set('prompter', { actor: this._prompterPage.actor });
         this._agentsPage = new AgentsPage(this._agents);
         this._pages.set('agents', { actor: this._agentsPage.actor });
+        this._notificationsPage = new NotificationsPage(this._notifications, this._interfaceSettings, {
+            onActivate: () => this._setExpanded(false),
+        });
+        this._pages.set('notifications', { actor: this._notificationsPage.actor });
 
         // Pages keep their final size and sit at the top center, so the notch
         // reveals them as it grows instead of squeezing them.
@@ -402,6 +412,7 @@ var Notch = class Notch {
             visible: false,
         });
         const tabs = [
+            ['notifications', 'preferences-system-notifications-symbolic', 'Notifications'],
             ['nook', 'view-app-grid-symbolic', 'Nook'],
             ['music', 'media-playback-start-symbolic', 'Music'],
             ['calendar', 'x-office-calendar-symbolic', 'Calendar'],
@@ -432,6 +443,7 @@ var Notch = class Notch {
         }
         if (name === 'calendar')
             this._calendarPage.refresh();
+        this._notificationsPage.setVisible(this._expanded && name === 'notifications');
         if (changed && this._expanded)
             this._relayout(true);
     }
@@ -602,6 +614,7 @@ var Notch = class Notch {
             this._fade(this._collapsed, true, 120);
             this._stopPositionPoll();
         }
+        this._notificationsPage.setVisible(expanded && this._page === 'notifications');
         this._syncEqualizers();
         this._layoutBackdrop(); // corner radius follows the expanded state
         this._relayout(true);
@@ -721,6 +734,24 @@ var Notch = class Notch {
             this._renderCollapsed();
         });
         this._renderCollapsed();
+    }
+
+    // A banner-worthy notification flashes in the closed notch: app icon and title.
+    _showNotification(n) {
+        if (this._expanded)
+            return;
+        let gicon = n.gicon;
+        try {
+            gicon ??= n.source?.getIcon();
+        } catch (e) {
+            gicon = null;
+        }
+        this._showTransient({
+            kind: 'notification', width: COLLAPSED_WIDTH.activity,
+            gicon, iconName: gicon ? null : 'preferences-system-notifications-symbolic',
+            text: n.title || n.source?.title || 'Notification',
+            right: 'label', rightText: 'New',
+        }, NOTIFICATION_MS);
     }
 
     _currentActivity() {
@@ -1097,11 +1128,13 @@ var Notch = class Notch {
         this._battery.disconnect(this._batteryId);
         this._timer.disconnect(this._timerId);
         this._agents.disconnect(this._agentsId);
+        this._notifications.disconnect(this._notificationShownId);
         this._busyIds.forEach(([obj, id]) => obj.disconnect(id));
 
         this._trayPage.destroy();
         this._prompterPage.destroy();
         this._agentsPage.destroy();
+        this._notificationsPage.destroy();
         this._nookPage.destroy();
         this._calendarPage.destroy();
         this._mpris.destroy();
@@ -1109,6 +1142,7 @@ var Notch = class Notch {
         this._downloads.destroy();
         this._timer.destroy();
         this._agents.destroy();
+        this._notifications.destroy();
         this._sysmon.destroy();
         this._battery.destroy();
         this._store.destroy();
