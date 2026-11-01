@@ -54,7 +54,7 @@
       <p class="meta"><span id="release-meta">GNOME Shell 42 · MIT license</span>
         · <a href="https://github.com/HAstaShakiba/rozan/releases">All releases</a></p>
       <div class="stage">
-        <img src="screenshot.png" width="1160" height="245" fetchpriority="high"
+        <img src="screenshot.png" width="1160" height="229" fetchpriority="high"
              alt="Rozan open on the Nook page: album art and controls, CPU and battery charts, a Focus timer and a to-do list">
       </div>
       <div class="pills">
@@ -68,7 +68,7 @@
   <section id="activities">
     <div class="wrap">
       <h2>Live activities, one at a time</h2>
-      <p class="section-lead">Closed, the notch is a small black pill over the top bar. It shows the most important
+      <p class="section-lead">Closed, the notch is a small black pill floating inside the top bar, like the Dynamic Island. It shows the most important
         thing happening right now and gets out of the way when a window goes fullscreen.</p>
       <div class="activities">
         <div>
@@ -95,7 +95,8 @@
     <div class="wrap">
       <h2>Seven workspaces</h2>
       <p class="section-lead">Hover the notch to open it, then pick a workspace from the tab pill. Scroll down to open,
-        scroll up to close, and scroll sideways to skip tracks.</p>
+        scroll up to close, and scroll sideways to skip tracks. The gear at the end of the tab pill opens settings,
+        where you can turn tabs off and change their order.</p>
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" aria-controls="p-notifications" id="t-notifications">Notifications</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="p-nook" id="t-nook">Nook</button>
@@ -119,7 +120,7 @@
           <li>A new one flashes in the closed notch, except in Do Not Disturb.</li></ul></div>
       </div>
       <div class="panel wide" role="tabpanel" id="p-nook" aria-labelledby="t-nook" hidden>
-        <div class="shot"><img src="img/nook.webp" width="1160" height="245" loading="lazy" alt="Nook page"></div>
+        <div class="shot"><img src="img/nook.webp" width="1160" height="229" loading="lazy" alt="Nook page"></div>
         <div><h3>Nook</h3><ul>
           <li>Mini player with the app's icon on the art.</li>
           <li>CPU and battery tiles with history charts (memory on desktops).</li>
@@ -127,21 +128,21 @@
           <li>To-dos: click to tick, right-click to delete.</li></ul></div>
       </div>
       <div class="panel" role="tabpanel" id="p-music" aria-labelledby="t-music" hidden>
-        <div class="shot"><img src="img/music.webp" width="560" height="240" loading="lazy" alt="Music page"></div>
+        <div class="shot"><img src="img/music.webp" width="560" height="237" loading="lazy" alt="Music page"></div>
         <div><h3>Music</h3><ul>
           <li>Works with any MPRIS player: Spotify, Firefox, Chromium, VLC and more.</li>
           <li>Art, title and artist, with a progress bar you can drag to seek.</li>
           <li>Previous, play/pause and next, plus sideways scroll to skip.</li></ul></div>
       </div>
       <div class="panel" role="tabpanel" id="p-calendar" aria-labelledby="t-calendar" hidden>
-        <div class="shot"><img src="img/calendar.webp" width="760" height="330" loading="lazy" alt="Calendar page"></div>
+        <div class="shot"><img src="img/calendar.webp" width="760" height="341" loading="lazy" alt="Calendar page"></div>
         <div><h3>Calendar</h3><ul>
           <li>Today's remaining events and tomorrow's, from GNOME's calendar server.</li>
           <li>Includes GNOME Online Accounts and Evolution calendars.</li>
           <li>An event in progress is marked <em>Now</em>.</li></ul></div>
       </div>
       <div class="panel" role="tabpanel" id="p-tray" aria-labelledby="t-tray" hidden>
-        <div class="shot"><img src="img/tray.webp" width="620" height="205" loading="lazy" alt="Tray page"></div>
+        <div class="shot"><img src="img/tray.webp" width="620" height="203" loading="lazy" alt="Tray page"></div>
         <div><h3>Tray</h3><ul>
           <li>A shelf for files you're about to use.</li>
           <li>Copy files in Files and press <em>Paste</em> (GNOME 42 can't accept drops from Wayland apps).</li>
@@ -155,7 +156,7 @@
           <li>Lock it open while you record.</li></ul></div>
       </div>
       <div class="panel" role="tabpanel" id="p-agents" aria-labelledby="t-agents" hidden>
-        <div class="shot"><img src="img/agents-perm.webp" width="690" height="330" loading="lazy" alt="Agents page with a permission request"></div>
+        <div class="shot"><img src="img/agents-perm.webp" width="690" height="251" loading="lazy" alt="Agents page with a permission request"></div>
         <div><h3>Agents</h3><ul>
           <li>Follow every Claude Code session: its prompt, task list and the command running now.</li>
           <li>Allow or deny permission requests from the notch, or jump to the terminal.</li>
@@ -169,9 +170,9 @@
       <h2>Classic or Liquid Glass</h2>
       <p class="section-lead">Right-click the tab pill to switch looks.</p>
       <div class="compare">
-        <figure class="shot"><img src="img/music.webp" width="560" height="240" loading="lazy" alt="Classic black notch on the Music page">
+        <figure class="shot"><img src="img/music.webp" width="560" height="237" loading="lazy" alt="Classic black notch on the Music page">
           <figcaption>Classic <span>· solid black, like a real notch</span></figcaption></figure>
-        <figure class="shot"><img src="img/glass-music.webp" width="560" height="240" loading="lazy" alt="Translucent blurred notch on the Music page">
+        <figure class="shot"><img src="img/glass-music.webp" width="560" height="237" loading="lazy" alt="Translucent blurred notch on the Music page">
           <figcaption>Liquid Glass <span>· blurred and translucent</span></figcaption></figure>
       </div>
     </div>
@@ -218,6 +219,7 @@ gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
         <tr><td>Click outside or scroll up</td><td>Close it</td></tr>
         <tr><td>Scroll sideways on the notch</td><td>Next or previous track</td></tr>
         <tr><td>Right-click the tab pill</td><td>Switch between Classic and Liquid Glass</td></tr>
+        <tr><td>Click the gear in the tab pill</td><td>Turn tabs on or off and change their order</td></tr>
       </table>
     </div>
   </section>
@@ -239,7 +241,7 @@ gnome-extensions enable rozan@hastashakiba.github.io</code></pre>
       </details>
       <details class="faq">
         <summary><h3>Does it cover the date menu?</h3></summary>
-        <p>Yes. The notch sits over the center of the top bar, including the clock and date menu. The collapsed notch shows the time instead.</p>
+        <p>Yes. The notch floats in the center of the top bar, over the clock and date menu. The collapsed notch shows the time instead.</p>
       </details>
       <details class="faq">
         <summary><h3>What does "Rozan" mean?</h3></summary>
