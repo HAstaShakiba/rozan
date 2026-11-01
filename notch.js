@@ -1,7 +1,7 @@
 /* exported Notch */
-// The notch: a black shape hanging from the top center of the primary monitor,
-// styled after NotchNook's "Classic" look (concave "ears" where it meets the top
-// bar, rounded bottom corners, a floating tab pill underneath when open).
+// The notch: a black pill floating just below the top edge of the primary monitor,
+// styled after the iPhone's Dynamic Island (fully rounded, detached from the screen
+// edge, a floating tab pill underneath when open).
 //
 // Collapsed, it shows one "live activity" at a time, in this priority order:
 //   1. transient: volume/brightness HUD, battery plug/unplug or low, finished download,
@@ -32,10 +32,12 @@ const { TrayPage } = Me.imports.tray;
 const { PrompterPage } = Me.imports.prompter;
 const { AgentsFeed, AgentsPage } = Me.imports.agents;
 const { NotificationsFeed, NotificationsPage } = Me.imports.notifications;
+const { TABS, loadTabs, SETTINGS_PATH } = Me.imports.settings;
 
-const EAR = 10; // radius of the concave corners joining the top bar
+const TOP_GAP = 3;        // space between the screen edge and the island; it stays inside the top bar
+const EXPANDED_TOP = 16;  // extra height above the page content when open
 const COLLAPSED_WIDTH = { idle: 100, music: 140, activity: 190, hud: 150 };
-// Body sizes of each workspace, excluding the top bar height (added at runtime).
+// Body sizes of each workspace, excluding EXPANDED_TOP.
 const PAGE_SIZE = {
     nook: [1080, 150],
     music: [500, 158],
@@ -45,9 +47,7 @@ const PAGE_SIZE = {
     agents: [620, 172],
     notifications: [560, 208],
 };
-// Liquid Glass: translucent tint over a blurred copy of what is behind the notch.
-const GLASS_TINT = [0.06, 0.06, 0.09, 0.42];
-const CORNER = { collapsed: 12, expanded: 30 }; // must match border-radius in the stylesheet
+const EXPANDED_CORNER = 34; // the collapsed island is a full pill (radius = height / 2)
 const TAB_GAP = 10;
 const LEVEL_WIDTH = 60;
 
@@ -77,30 +77,6 @@ function ellipsize(label) {
     return label;
 }
 
-// A concave corner piece: a square with a quarter circle cut out of its outer bottom corner.
-function makeEar(side, colorFn) {
-    const ear = new St.DrawingArea({ width: EAR, height: EAR });
-    ear.connect('repaint', area => {
-        const cr = area.get_context();
-        cr.setSourceRGBA(...colorFn());
-        if (side === 'left') {
-            cr.moveTo(0, 0);
-            cr.lineTo(EAR, 0);
-            cr.lineTo(EAR, EAR);
-            cr.arcNegative(0, EAR, EAR, 0, -Math.PI / 2);
-        } else {
-            cr.moveTo(EAR, 0);
-            cr.lineTo(0, 0);
-            cr.lineTo(0, EAR);
-            cr.arc(EAR, EAR, EAR, Math.PI, 1.5 * Math.PI);
-        }
-        cr.closePath();
-        cr.fill();
-        cr.$dispose();
-    });
-    return ear;
-}
-
 // Liquid Glass backdrop. Shell.BlurEffect only blurs rectangles, and blurring several small
 // strips to fake the rounded bottom corners leaves dark seams (each strip is blurred on its own,
 // so its edges darken). Instead one rectangle is blurred and its painting is clipped to the
@@ -117,7 +93,7 @@ class RoundedBlur extends St.Widget {
     }
 
     setShape(width, height, radius) {
-        this._radius = Math.max(0, Math.min(radius, height, width / 2));
+        this._radius = Math.max(0, Math.min(radius, height / 2, width / 2));
         this._blur.set_position(0, 0);
         this._blur.set_size(width, height);
         this.queue_redraw();
@@ -156,11 +132,12 @@ class RoundedBlur extends St.Widget {
                 region.unionRectangle({ x: x0, y: y0, width: x1 - x0, height: y1 - y0 });
         };
         const w = this._blur.width, h = this._blur.height, r = this._radius;
-        add(0, 0, w, h - r);
+        add(0, r, w, h - 2 * r);
         for (let i = 0; i < r; i++) {
-            const dy = i + 0.5; // row center, measured from the corner circle's center
+            const dy = r - i - 0.5; // row center, measured from the corner circle's center
             const inset = r - Math.sqrt(r * r - dy * dy);
-            add(inset, h - r + i, w - 2 * inset, 1);
+            add(inset, i, w - 2 * inset, 1);         // top corners
+            add(inset, h - 1 - i, w - 2 * inset, 1); // bottom corners
         }
         return region;
     }
@@ -238,25 +215,21 @@ var Notch = class Notch {
         this._notifications = new NotificationsFeed();
         this._style = this._store.get('style', 'classic');
 
-        // Outer actor: transparent, holds the two ears and the black body between them.
+        // Outer actor: transparent, reaches up to the screen edge so pushing the pointer
+        // against the top still opens the island floating below it.
         this.actor = new St.Widget({ name: 'linuxNotch', reactive: true, track_hover: true });
-        const earColor = () => (this._style === 'glass' ? GLASS_TINT : [0, 0, 0, 1]);
-        this._earLeft = makeEar('left', earColor);
-        this._earRight = makeEar('right', earColor);
         this._body = new St.Widget({
             style_class: 'ln-notch',
             clip_to_allocation: true,
             layout_manager: new Clutter.BinLayout(),
-            x: EAR,
+            y: TOP_GAP,
         });
         // Glass backdrop: blurred copy of what is behind the body, clipped to its rounded shape.
         this._backdrop = new RoundedBlur({ x_expand: true, y_expand: true, visible: false });
         this._body.add_child(this._backdrop);
         this._body.connect('notify::width', () => this._layoutBackdrop());
         this._body.connect('notify::height', () => this._layoutBackdrop());
-        this.actor.add_child(this._earLeft);
         this.actor.add_child(this._body);
-        this.actor.add_child(this._earRight);
 
         this._buildCollapsed();
         this._buildExpanded();
@@ -319,7 +292,8 @@ var Notch = class Notch {
 
         this._patchOsd();
         this._syncPlayer();
-        this._selectPage('notifications');
+        this._applyTabs();
+        this._watchSettings();
         this._relayout(false);
     }
 
@@ -393,11 +367,11 @@ var Notch = class Notch {
         // reveals them as it grows instead of squeezing them.
         for (const [name, page] of this._pages) {
             const [w, h] = PAGE_SIZE[name];
-            page.actor.set_size(w, h + this._barHeight);
+            page.actor.set_size(w, h + EXPANDED_TOP);
             page.actor.x_align = Clutter.ActorAlign.CENTER;
             page.actor.y_align = Clutter.ActorAlign.START;
             page.actor.x_expand = page.actor.y_expand = false;
-            page.actor.style = `padding-top: ${this._barHeight + 6}px;`;
+            page.actor.style = `padding-top: ${EXPANDED_TOP + 6}px;`;
             page.actor.visible = false;
             this._expandedBox.add_child(page.actor);
         }
@@ -411,16 +385,7 @@ var Notch = class Notch {
             opacity: 0,
             visible: false,
         });
-        const tabs = [
-            ['notifications', 'preferences-system-notifications-symbolic', 'Notifications'],
-            ['nook', 'view-app-grid-symbolic', 'Nook'],
-            ['music', 'media-playback-start-symbolic', 'Music'],
-            ['calendar', 'x-office-calendar-symbolic', 'Calendar'],
-            ['tray', 'mail-inbox-symbolic', 'Tray'],
-            ['prompter', 'format-justify-left-symbolic', 'Prompter'],
-            ['agents', 'emoji-symbols-symbolic', 'Agents'],
-        ];
-        for (const [name, iconName, text] of tabs) {
+        for (const [name, iconName, text] of TABS) {
             const content = new St.BoxLayout({ style_class: 'ln-tab-content' });
             content.add_child(new St.Icon({ icon_name: iconName, icon_size: 14, y_align: Clutter.ActorAlign.CENTER }));
             const label = new St.Label({ text, style_class: 'ln-tab-label', y_align: Clutter.ActorAlign.CENTER });
@@ -430,6 +395,50 @@ var Notch = class Notch {
             this._tabBar.add_child(button);
             Object.assign(this._pages.get(name), { button, label });
         }
+        // Settings: which tabs are shown and their order (prefs.js).
+        this._settingsButton = new St.Button({
+            style_class: 'ln-tab',
+            can_focus: true,
+            accessible_name: 'Settings',
+            child: new St.Icon({ icon_name: 'emblem-system-symbolic', icon_size: 14 }),
+        });
+        this._settingsButton.connect('clicked', () => {
+            this._setExpanded(false);
+            ExtensionUtils.openPrefs();
+        });
+        this._tabBar.add_child(this._settingsButton);
+    }
+
+    // Shows the enabled tabs in the user's order (settings.json, written by prefs.js).
+    _applyTabs() {
+        this._tabs = loadTabs();
+        this._tabs.forEach((tab, i) => {
+            const button = this._pages.get(tab.name).button;
+            this._tabBar.set_child_at_index(button, i);
+            button.visible = tab.enabled;
+        });
+        if (!this._isTabEnabled(this._page))
+            this._page = this._tabs.find(t => t.enabled).name;
+        this._selectPage(this._page);
+        this._relayout(this._expanded);
+    }
+
+    _isTabEnabled(name) {
+        return this._tabs.some(t => t.name === name && t.enabled);
+    }
+
+    _watchSettings() {
+        const file = Gio.File.new_for_path(SETTINGS_PATH);
+        try {
+            this._settingsMonitor = file.monitor_file(Gio.FileMonitorFlags.NONE, null);
+        } catch (e) {
+            logError(e, 'rozan: cannot watch settings');
+            return;
+        }
+        // prefs.js replaces the file, so wait for the dust to settle before reading it.
+        this._settingsMonitor.connect('changed', () => {
+            this._addTimeout('settings', 100, () => this._applyTabs());
+        });
     }
 
     _selectPage(name) {
@@ -533,9 +542,13 @@ var Notch = class Notch {
     _bodySize() {
         if (this._expanded) {
             const [w, h] = PAGE_SIZE[this._page];
-            return [w, h + this._barHeight];
+            return [w, h + EXPANDED_TOP];
         }
-        return [this._collapsedWidth, this._barHeight];
+        return [this._collapsedWidth, Math.max(20, this._barHeight - 2 * TOP_GAP)];
+    }
+
+    get _cornerRadius() {
+        return this._expanded ? EXPANDED_CORNER : Math.floor(this._bodySize()[1] / 2);
     }
 
     _relayout(animate) {
@@ -543,24 +556,23 @@ var Notch = class Notch {
         if (!monitor)
             return;
         const [w, h] = this._bodySize();
-        const outerW = w + 2 * EAR;
-        const x = monitor.x + Math.round((monitor.width - outerW) / 2);
+        const x = monitor.x + Math.round((monitor.width - w) / 2);
         const y = monitor.y;
+        this._body.style = `border-radius: ${this._cornerRadius}px;`;
 
         const tabW = this._tabBar.get_preferred_width(-1)[1];
         const tabX = monitor.x + Math.round((monitor.width - tabW) / 2);
-        const tabY = y + h + TAB_GAP;
+        const tabY = y + TOP_GAP + h + TAB_GAP;
 
         if (!animate) {
             // Cancel only geometry animations; the fades on these actors must keep running.
-            for (const a of [this.actor, this._body, this._earRight, this._tabBar]) {
+            for (const a of [this.actor, this._body, this._tabBar]) {
                 for (const prop of ['x', 'y', 'width', 'height'])
                     a.remove_transition(prop);
             }
             this.actor.set_position(x, y);
-            this.actor.set_size(outerW, h);
+            this.actor.set_size(w, h + TOP_GAP);
             this._body.set_size(w, h);
-            this._earRight.x = EAR + w;
             this._tabBar.set_position(tabX, tabY);
             return;
         }
@@ -568,9 +580,8 @@ var Notch = class Notch {
             duration: this._expanded ? 320 : 220,
             mode: this._expanded ? Clutter.AnimationMode.EASE_OUT_BACK : Clutter.AnimationMode.EASE_OUT_QUAD,
         };
-        this.actor.ease({ x, y, width: outerW, height: h, ...params });
+        this.actor.ease({ x, y, width: w, height: h + TOP_GAP, ...params });
         this._body.ease({ width: w, height: h, ...params });
-        this._earRight.ease({ x: EAR + w, ...params });
         this._tabBar.ease({ x: tabX, y: tabY, ...params });
     }
 
@@ -596,7 +607,7 @@ var Notch = class Notch {
         this._expanded = expanded;
 
         if (expanded) {
-            if (this._agents.pendingPermission)
+            if (this._agents.pendingPermission && this._isTabEnabled('agents'))
                 this._selectPage('agents');
             this._body.add_style_class_name('expanded');
             this._fade(this._collapsed, false);
@@ -879,15 +890,12 @@ var Notch = class Notch {
             else
                 actor.remove_style_class_name('glass');
         }
-        this._earLeft.queue_repaint();
-        this._earRight.queue_repaint();
     }
 
     _layoutBackdrop() {
         if (!this._backdrop.visible)
             return;
-        const r = this._expanded ? CORNER.expanded : CORNER.collapsed;
-        this._backdrop.setShape(this._body.width, this._body.height, r);
+        this._backdrop.setShape(this._body.width, this._body.height, this._cornerRadius);
     }
 
     // Volume and brightness popups go to the notch instead of the center of the screen.
@@ -1130,6 +1138,7 @@ var Notch = class Notch {
         this._agents.disconnect(this._agentsId);
         this._notifications.disconnect(this._notificationShownId);
         this._busyIds.forEach(([obj, id]) => obj.disconnect(id));
+        this._settingsMonitor?.cancel();
 
         this._trayPage.destroy();
         this._prompterPage.destroy();

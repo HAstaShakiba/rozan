@@ -64,6 +64,10 @@ Then install as above. If you use the Claude Code hook, update its path in `~/.c
 | Scroll sideways on the notch | Next or previous track |
 | Click a tab in the tab pill | Switch workspace |
 | Right-click the tab pill | Switch between **Classic** (black) and **Liquid Glass** (blurred, translucent) |
+| Click the gear at the end of the tab pill | Open settings: turn tabs on or off and change their order |
+
+Settings are also available from the Extensions app or `gnome-extensions prefs rozan@hastashakiba.github.io`. They are
+saved in `~/.local/share/rozan/settings.json` and apply right away.
 
 The notch hides when a window is fullscreen. It covers the center of the top bar, including the date menu; the closed
 notch shows the time instead.
