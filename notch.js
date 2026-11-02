@@ -10,7 +10,10 @@
 //   2. meeting starting within 10 minutes (or started under 5 minutes ago)
 //   3. download in progress
 //   4. music playing (album art + equalizer)
-//   5. idle (clock)
+//   5. idle (clock only)
+//
+// The clock always sits in the middle of the collapsed notch; an activity fills the two
+// sides around it (icon and text on the left, status on the right).
 //
 // Hover, click or scroll down opens it. Each workspace (Nook, Music, Calendar, ...) has its
 // own size; switching tabs animates between them.
@@ -36,7 +39,7 @@ const { TABS, loadTabs, SETTINGS_PATH } = Me.imports.settings;
 
 const TOP_GAP = 3;        // space between the screen edge and the island; it stays inside the top bar
 const EXPANDED_TOP = 16;  // extra height above the page content when open
-const COLLAPSED_WIDTH = { idle: 100, music: 140, activity: 190, hud: 150 };
+const COLLAPSED_WIDTH = { idle: 100, music: 150, activity: 300, hud: 220 };
 // Body sizes of each workspace, excluding EXPANDED_TOP.
 const PAGE_SIZE = {
     nook: [1080, 150],
@@ -306,16 +309,22 @@ var Notch = class Notch {
     _buildCollapsed() {
         this._collapsed = new St.BoxLayout({ style_class: 'ln-collapsed', x_expand: true, y_expand: true });
 
+        // Both sides report a natural width of 0 and expand, so the box splits the space
+        // around the clock evenly and the clock stays centered whatever the sides hold.
+        const side = () => new St.BoxLayout({
+            style_class: 'ln-side', x_expand: true, natural_width: 0, min_width: 0,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this._leftSide = side();
+        this._rightSide = side();
+
         this._leftArt = new St.Bin({ style_class: 'ln-mini-art', y_align: Clutter.ActorAlign.CENTER });
         this._leftArtIcon = new St.Icon({ icon_name: 'audio-x-generic-symbolic', icon_size: 12 });
         this._leftIcon = new St.Icon({ style_class: 'ln-mini-icon', icon_size: 16, y_align: Clutter.ActorAlign.CENTER });
 
-        this._center = ellipsize(new St.Label({
-            style_class: 'ln-center',
-            x_expand: true,
-            x_align: Clutter.ActorAlign.CENTER,
-            y_align: Clutter.ActorAlign.CENTER,
-        }));
+        this._leftText = ellipsize(new St.Label({ style_class: 'ln-left-text', y_align: Clutter.ActorAlign.CENTER }));
+
+        this._clock = new St.Label({ style_class: 'ln-center', y_align: Clutter.ActorAlign.CENTER });
 
         this._miniEq = new Equalizer(3, 14, 'ln-eq');
 
@@ -325,7 +334,12 @@ var Notch = class Notch {
 
         this._rightLabel = new St.Label({ style_class: 'ln-right', y_align: Clutter.ActorAlign.CENTER });
 
-        for (const child of [this._leftArt, this._leftIcon, this._center, this._miniEq.actor, this._level, this._rightLabel])
+        for (const child of [this._leftArt, this._leftIcon, this._leftText])
+            this._leftSide.add_child(child);
+        this._rightSide.add_child(new St.Widget({ x_expand: true })); // pushes the right side to the edge
+        for (const child of [this._miniEq.actor, this._level, this._rightLabel])
+            this._rightSide.add_child(child);
+        for (const child of [this._leftSide, this._clock, this._rightSide])
             this._collapsed.add_child(child);
     }
 
@@ -814,7 +828,7 @@ var Notch = class Notch {
             };
         }
 
-        // Like NotchNook: art on the left, bars on the right, nothing in the middle.
+        // Art on the left, bars on the right, the clock in the middle.
         if (this._player?.isPlaying)
             return { kind: 'music', width: COLLAPSED_WIDTH.music, art: true, text: '', right: 'eq' };
 
@@ -832,8 +846,8 @@ var Notch = class Notch {
         else if (a.iconName)
             this._leftIcon.icon_name = a.iconName;
 
-        this._showingClock = a.text === null || a.text === undefined;
-        this._center.text = this._showingClock ? this._clockText : a.text;
+        this._leftText.text = a.text ?? '';
+        this._leftText.visible = Boolean(a.text);
 
         this._miniEq.actor.visible = a.right === 'eq';
         this._level.visible = a.right === 'level';
@@ -934,8 +948,8 @@ var Notch = class Notch {
     _updateClock() {
         const twelveHour = this._interfaceSettings.get_string('clock-format') === '12h';
         this._clockText = GLib.DateTime.new_now_local().format(twelveHour ? '%l:%M' : '%H:%M').trim();
-        if (this._showingClock && this._center.text !== this._clockText)
-            this._center.text = this._clockText;
+        if (this._clock.text !== this._clockText)
+            this._clock.text = this._clockText;
     }
 
     // ---- music --------------------------------------------------------
